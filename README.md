@@ -46,33 +46,53 @@ ssh-keygen -t rsa -b 4096 -C "$(git config user.email)" -f gh-pages-actions -N "
 ### `Go to Settings -> secrets and copy private key`
 
 ```
-name: Deploy React App
+name: CI/CD React
+
 on:
   workflow_dispatch:
   push:
-    branches:
-      - master
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 jobs:
-  deploy:
-    runs-on: macos-latest
+  build:
+
+    runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [12.x]
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Install Packages
+
+    - name: Install dependencies
       run: npm install
-    - name: Build page
+
+    - name: Run the tests and generate coverage report
+      run: npm test -- --coverage
+
+    - name: Build
       run: npm run build
-    - name: Deploy to gh-pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        deploy_key: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        publish_dir: ./build
+
+    - name: Deploy
+      run: |
+        git config --global user.name $user_name
+        git config --global user.email $user_email
+        git remote set-url origin https://${github_token}@github.com/${repository}
+        npm run deploy
+      env:
+        user_name: 'github-actions[bot]'
+        user_email: 'github-actions[bot]@users.noreply.github.com'
+        github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        repository: ${{ github.repository }}
         
   ```      
         
