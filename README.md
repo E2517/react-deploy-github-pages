@@ -35,11 +35,13 @@ Open [GitHub pages](https://e2517.github.io/react-deploy-github-pages/) to view 
 
 # OPTION 2 - GITHUB ACTIONS
 
-### `Go to Settings (profile) -> Developer tools`
+### `Go to Settings (profile) -> Developer settings`
 
-### `Go to TOKEN -> generate a new token with repo, write, read and workflow`
+### `Go to Personal access token -> generate a new token with repo, write, read and workflow`
 
 ### `Go to Settings -> Secrets and paste token`
+
+### `Create a new GitHub Action with this code`
 
 ```
 name: CI/CD React
