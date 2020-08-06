@@ -1,9 +1,6 @@
 name: Deploy React App
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
 jobs:
   deploy:
     runs-on: macos-latest
@@ -20,6 +17,12 @@ jobs:
       run: npm install
     - name: Build page
       run: npm run build
+    - run: |
+        git config user.name e2517
+        git config user.email ${{ secrets.EMAIL_GMAIL }}
+        git add .
+        git commit -m "[update]"
+        git push origin master
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
       with:
