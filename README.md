@@ -35,15 +35,11 @@ Open [GitHub pages](https://e2517.github.io/react-deploy-github-pages/) to view 
 
 # OPTION 2 - GITHUB ACTIONS
 
-### `Go to Terminal and create a new SSH public/private key`
-```
-cd ~/.ssh
-ssh-keygen -t rsa -b 4096 -C "$(git config user.email)" -f gh-pages-actions -N ""
+### `Go to Settings (profile) -> Developer tools`
 
-```
-### `Go to Settings -> Deploy Key and copy public key with writen`
+### `Go to TOKEN -> generate a new token with repo, write, read and workflow`
 
-### `Go to Settings -> secrets and copy private key`
+### `Go to Settings -> Secrets and paste token`
 
 ```
 name: CI/CD React
