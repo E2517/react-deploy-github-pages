@@ -15,7 +15,7 @@ function App() {
           rel="noopener noreferrer"
         >
           e2517 GitHub Actions
-    hola
+    hola2
         </a>
       </header>
     </div>
